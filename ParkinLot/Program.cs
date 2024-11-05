@@ -7,6 +7,7 @@ namespace ParkinLot
         static void Main(string[] args)
         {
             Console.WriteLine(Helpers.Usertype());
+            
         }
     }
 }

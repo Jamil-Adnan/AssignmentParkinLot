@@ -19,6 +19,7 @@ namespace ParkinLot
             switch (menu) 
             {
                 case '1':
+                    ParkinLot.TransportType.ValjTransport();
                     return "Welcome customer!";
                     
                 case '2':
