@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0" version="24.8.3">
   <diagram name="Page-1" id="d8_uXIcVJEX4v-GWLGfb">
-    <mxGraphModel dx="1358" dy="744" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1296" dy="710" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -19,10 +19,10 @@
         <mxCell id="TH2mGcFkLHiQyE80FXd0-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
           <mxGeometry y="104" width="310" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="TH2mGcFkLHiQyE80FXd0-25" value="+ addUser(User user): bool&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;if vehicle is bike - check if there is already parked in parkinglot. If not put in parkinglot&lt;br&gt;&lt;br&gt;if car - put in free place&lt;/div&gt;&lt;div&gt;if buss - check there are 2 places nearby. for ex if place 5 is free then 3 or 4 must be free to&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
+        <mxCell id="TH2mGcFkLHiQyE80FXd0-25" value="+ addVehicle(Vehicle&amp;nbsp;vehicle): bool&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;if vehicle is bike - check if there is already parked in parkinglot. If not put in parkinglot&lt;br&gt;&lt;br&gt;if car - put in free place&lt;/div&gt;&lt;div&gt;if buss - check there are 2 places nearby. for ex if place 5 is free then 3 or 4 must be free to&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
           <mxGeometry y="112" width="310" height="172" as="geometry" />
         </mxCell>
-        <mxCell id="TH2mGcFkLHiQyE80FXd0-26" value="+ removeUser(User user): void&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
+        <mxCell id="TH2mGcFkLHiQyE80FXd0-26" value="+ removeVehicle(Vehicle vehicle): void&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
           <mxGeometry y="284" width="310" height="26" as="geometry" />
         </mxCell>
         <mxCell id="TH2mGcFkLHiQyE80FXd0-27" value="+ countPriceForParking(double parkingTime): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
