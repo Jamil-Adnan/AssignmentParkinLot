@@ -13,7 +13,7 @@
         <mxCell id="TH2mGcFkLHiQyE80FXd0-24" value="+ parkingSIze: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
           <mxGeometry y="52" width="310" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="TH2mGcFkLHiQyE80FXd0-2" value="+ parkigLot: List&amp;lt;User&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
+        <mxCell id="TH2mGcFkLHiQyE80FXd0-2" value="+ parkigLot: List&amp;lt;Vehicle&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
           <mxGeometry y="78" width="310" height="26" as="geometry" />
         </mxCell>
         <mxCell id="TH2mGcFkLHiQyE80FXd0-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="TH2mGcFkLHiQyE80FXd0-1" vertex="1">
