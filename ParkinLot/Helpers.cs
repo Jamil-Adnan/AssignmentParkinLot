@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkinLot
 {
-    internal class Helpers
+    public static class Helpers
     {
         public static void Usertype()
         {
@@ -21,23 +21,20 @@ namespace ParkinLot
                 case '1':
 
                     Console.WriteLine("Welcome customer!");
-                    ParkinLot.TransportType.ValjTransport();
+                    TransportType.ValjTransport();
                     break;
-                    
-                    
-                    
+
                 case '2':
                     Console.WriteLine("Welcome parking attendant!");
                     break;
                     
-                    
                 case '3':
                     Console.WriteLine("welcome Administrator!");
                     break;
-                    
+                      
                     
                 default:
-                    Console.WriteLine("Please chose a valid menu");
+                    Console.WriteLine( "Please chose a valid menu");
                     break;
             }
         }

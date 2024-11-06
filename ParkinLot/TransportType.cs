@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParkinLot
 {
-    public class TransportType
+    public static class TransportType
         {
         public static void ValjTransport()
             {
