@@ -1,4 +1,4 @@
-﻿using System.Reflection.Metadata;
+using System.Reflection.Metadata;
 
 namespace ParkinLot
 {
@@ -7,7 +7,11 @@ namespace ParkinLot
         static void Main(string[] args)
 
         {
-            Helpers.Usertype();
+            Parking parking = new Parking(25);
+            parking.createParkingLots();
+            System.Console.WriteLine(parking.parkingLot.Count());
+            
+            // Helpers.Usertype();
         }
     }
 }
