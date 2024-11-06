@@ -8,7 +8,7 @@ namespace ParkinLot
 {
     internal class Helpers
     {
-        public static string Usertype()
+        public static void Usertype()
         {
             Console.WriteLine("Welcome to Gabis Parking Lot!");
             Console.WriteLine("-----------------------------");
@@ -19,17 +19,26 @@ namespace ParkinLot
             switch (menu) 
             {
                 case '1':
+
+                    Console.WriteLine("Welcome customer!");
                     ParkinLot.TransportType.ValjTransport();
-                    return "Welcome customer!";
+                    break;
+                    
+                    
                     
                 case '2':
-                    return "Welcome parking attendant!";
+                    Console.WriteLine("Welcome parking attendant!");
+                    break;
+                    
                     
                 case '3':
-                    return "welcome Administrator!";
+                    Console.WriteLine("welcome Administrator!");
+                    break;
+                    
                     
                 default:
-                    return "Please chose a valid menu";
+                    Console.WriteLine("Please chose a valid menu");
+                    break;
             }
         }
     }

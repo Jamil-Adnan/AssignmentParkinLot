@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParkinLot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace ParkinLot
                 switch (transportType)
                 {
                     case "bil":
-                        Bil.SkapaBil();
+                        Bil.SkapaBil();                        
                         break;
 
                     case "motorcykel":
@@ -182,7 +183,7 @@ public class Buss : Transport
 
         Buss buss = new Buss(regNumber, color, 2.0, antalPassagerare);
         Console.WriteLine($"Transporttyp: {buss.Type()}, {buss.BussInfo()}");
-        Console.WriteLine($"Registreringsnummer: {buss.RegNumber}, Färg: {buss.Color}, Ankomsttid: {buss.ArrivalTime}");
+        Console.WriteLine($"Registreringsnummer: {buss.RegNumber}, Färg: {buss.Color}, Ankomsttid: {buss.ArrivalTime}");        
         return buss;
     }
 }

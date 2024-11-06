@@ -6,7 +6,8 @@ namespace ParkinLot
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Helpers.Usertype());
+            Helpers.Usertype();
+          // Parking.ParkVehicle();  // need to check where is the method invoked from
             
         }
     }
