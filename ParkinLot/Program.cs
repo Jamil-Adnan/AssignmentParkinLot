@@ -11,7 +11,7 @@ namespace ParkinLot
             parking.createParkingLots();
             System.Console.WriteLine(parking.parkingLot.Count());
             
-            // Helpers.Usertype();
+            Helpers.Usertype();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ParkinLot
                 case '1':
 
                     Console.WriteLine("Welcome customer!");
-                    TransportType.ValjTransport();
+                    TransportMenu.ValjaTransportMenu();
                     break;
 
                 case '2':
