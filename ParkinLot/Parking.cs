@@ -34,8 +34,6 @@ namespace ParkinLot
         public bool ParkVehicle(Transport vehicle)
         {
         List<int> emptySlots = FindEmptyParkingSlots();
-        System.Console.WriteLine("PARKING SLOTS ");
-        System.Console.WriteLine(emptySlots.Count);
         if (emptySlots.Count > 0)
         {
             int slotIndex = emptySlots[0]; // Get the first empty slot
@@ -53,8 +51,10 @@ namespace ParkinLot
             };
         }
 
-        public void PrintAllParkedTransports()
+        public void ViewParkingSlots()
         {
+
+            System.Console.WriteLine("THIS");
             if (parkingLot.Count == 0)
             {
                 Console.WriteLine("The parking lot is empty.");

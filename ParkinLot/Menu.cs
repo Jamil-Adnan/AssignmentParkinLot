@@ -10,8 +10,15 @@ namespace ParkinLot
     public static class Menu
     {
 
-        public static void GuardMenu(){
+        public static void GuardMenu(Parking parking){
 
+            System.Console.WriteLine("1. View Parking \n 2. Give Ticket");
+            int choice = int.Parse(System.Console.ReadLine());
+
+            if (choice == 1){
+                System.Console.WriteLine("PRINTING PARKING");
+                System.Console.WriteLine(parking.parkingLot.Count);
+                parking.ViewParkingSlots();}
         }
         public static Transport ParkingMenu()
         {
@@ -22,10 +29,7 @@ namespace ParkinLot
             Console.WriteLine("Ange färg på transport:");
             string color = Console.ReadLine();
 
-            Console.WriteLine("Välj din transporttyp genom att trycka på rätt siffra:");
-            Console.WriteLine("1. Bil");
-            Console.WriteLine("2. Motorcykel");
-            Console.WriteLine("3. Buss");
+            Console.WriteLine("Välj din transporttyp genom att trycka på rätt siffra: \n1. Bil \n2. Motorcykel \n3. Buss");
 
             string choice = Console.ReadLine();
 
@@ -39,8 +43,6 @@ namespace ParkinLot
 
                     Bil bil = new Bil(regNumber, color, 1, elCar); 
                     bil.ExitTime = HanteraParkering(bil);
-                    System.Console.WriteLine("THIS IS MY PRINT");
-                    System.Console.WriteLine(bil.RegNumber + bil.Color + bil.Size + bil.Elbil + bil.ArrivalTime + bil.ExitTime);
                     return bil;
 
                 case "2":
