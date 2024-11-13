@@ -14,23 +14,27 @@ namespace ParkinLot
         public double Size { get; set; }
 
         public DateTime ArrivalTime { get; set; }
-
+        public DateTime? ExitTime { get; set;}
         public Transport(string regNumber, string color, double size)
         {
             RegNumber = regNumber;
             Color = color;
             Size = size;
             ArrivalTime = DateTime.Now;
+            ExitTime = null;
+
             
         }
 
-        public virtual string Type()
-        {
-            return "Transport";
+        public bool ValidatePlate(string regNumber){
+                if (regNumber.Length >= 2 && regNumber.Length <= 7 && !regNumber.Contains(" "))
+                {
+                    return true;
+                } 
+                return false; 
         }
     }
 
-    // Subklass Bil
     public class Bil : Transport
     {
         public bool Elbil { get; set; }
@@ -41,19 +45,10 @@ namespace ParkinLot
             Elbil = elbil;
         }
 
-        public override string Type()
-        {
-            return "Bil";
-        }
-
-        public string ElbilInfo()
-        {
-            return Elbil ? "Elektrisk bil" : "Ej elektrisk bil";
-        }
 
         // Metod för att hantera inmatning och utskrift för Bil
-        public static Bil SkapaBil()
-        {
+        // public static Bil SkapaBil()
+        // {
          //   SKa vi använda en sånt kod eller enklare versioner där användaren skriver in själv vilken färg har hans transport?
             //Console.WriteLine("Ange registreringsnummer:"); Gammla version
             // string regNumber = Console.ReadLine();
@@ -124,9 +119,9 @@ namespace ParkinLot
             Console.WriteLine($"Registreringsnummer: {bil.RegNumber}, Färg: {bil.Color}, Ankomsttid: {bil.ArrivalTime}");
             return bil;
         }
-    }
+        
 */
-    // Subklass Motorcykel
+    }
     public class Motorcykel : Transport
     {
         public string Marke { get; set; }
@@ -137,50 +132,8 @@ namespace ParkinLot
             Marke = marke;
         }
 
-        public override string Type()
-        {
-            return "Motorcykel";
-        }
-
-        public string MotorcykelInfo()
-        {
-            return $"Märke: {Marke}";
-        }
-
-        // Metod för att hantera inmatning och utskrift för Motorcykel
-        public static Motorcykel SkapaMotorcykel()
-        {
-            string regNumber;
-            while (true)
-            {
-                Console.WriteLine("Ange registreringsnummer: ");
-                regNumber = Console.ReadLine().Trim();
-
-                if (regNumber.Length >= 2 && regNumber.Length <= 7 && !regNumber.Contains(" "))
-                {
-                    break; // Avsluta loopen om numret är giltigt
-                } 
-                else
-                {
-                    Console.WriteLine("Ogiltigt registreringsnummer. Försök igen.");
-                }
-            }
-
-            Console.WriteLine("Ange färg på transport:");
-            string color = Console.ReadLine();
-            color = char.ToUpper(color[0]) + color[1..].ToLower();
-
-            Console.WriteLine("Vilket märke är motorcykeln?");
-            string marke = Console.ReadLine();
-
-            Motorcykel motorcykel = new Motorcykel(regNumber, color, 0.5, marke);
-            Console.WriteLine($"Transporttyp: {motorcykel.Type()}, {motorcykel.MotorcykelInfo()}");
-            Console.WriteLine($"Registreringsnummer: {motorcykel.RegNumber}, Färg: {motorcykel.Color}, Ankomsttid: {motorcykel.ArrivalTime}");
-            return motorcykel;
-        }
     }
 
-    // Subklass Buss
     public class Buss : Transport
     {
         public int AntalPassagerare { get; set; }
@@ -191,45 +144,5 @@ namespace ParkinLot
             AntalPassagerare = antalPassagerare;
         }
 
-        public override string Type()
-        {
-            return "Buss";
-        }
-
-        public string BussInfo()
-        {
-            return $"Antal sittplatser: {AntalPassagerare}";
-        }
-
-        // Metod för att hantera inmatning och utskrift för Buss
-        public static Buss SkapaBuss()
-        {
-            string regNumber;
-            while (true)
-            {
-                Console.WriteLine("Ange registreringsnummer: ");
-                regNumber = Console.ReadLine().Trim();
-
-                if (regNumber.Length >= 2 && regNumber.Length <= 7 && !regNumber.Contains(" "))
-                {
-                    break; // Avsluta loopen om numret är giltigt
-                }
-                else
-                {
-                    Console.WriteLine("Ogiltigt registreringsnummer. Försök igen.");
-                }
-            }
-            Console.WriteLine("Ange färg på transport:");
-            string color = Console.ReadLine();
-            color = char.ToUpper(color[0]) + color[1..].ToLower();
-
-            Console.WriteLine("Hur många sittplatser finns i bussen?");
-            int antalPassagerare = int.Parse(Console.ReadLine());
-
-            Buss buss = new Buss(regNumber, color, 2.0, antalPassagerare);
-            Console.WriteLine($"Transporttyp: {buss.Type()}, {buss.BussInfo()}");
-            Console.WriteLine($"Registreringsnummer: {buss.RegNumber}, Färg: {buss.Color}, Ankomsttid: {buss.ArrivalTime}");
-            return buss;
-        }
     }
 }
