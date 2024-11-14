@@ -18,6 +18,7 @@ namespace ParkinLot
             createParkingLots();
         }
 
+        
         public List<int> FindEmptyParkingSlots()
         {
         List<int> emptySlots = new List<int>();
@@ -77,21 +78,55 @@ namespace ParkinLot
                         
                         if (transport.ExitTime.HasValue)
                         {
-                            var timeNow = DateTime.Now;
-                            TimeSpan diff = transport.ExitTime.Value - timeNow; 
-                            Console.WriteLine($"    Exit Time: { Math.Floor(diff.TotalSeconds)} left");
+                            Console.WriteLine($"    Exit Time: { GetTimespan(transport)} left");
                         }
                         else
                         {
                             Console.WriteLine("    Exit Time: Not exited yet");
                         }
+
+                        if (transport.ticketFee > 0){
+                            System.Console.WriteLine($"    Fee: {transport.ticketFee}");
+                        }
                         
-                        Console.WriteLine(); // Empty line for better readability
                     }
                 }
                 
                 Console.WriteLine(); // Empty line between rows
             }
         }
+        
+    public Transport FindTransportByRegNumber(string regNumber)
+    {
+        // Validate input
+        if (string.IsNullOrWhiteSpace(regNumber))
+        {
+            throw new ArgumentException("Registration number cannot be null or empty.", nameof(regNumber));
+        }
+
+        regNumber = regNumber.Trim();
+
+        // Search through each row in the parking lot
+        for (int i = 0; i < parkingLot.Count; i++)
+        {
+            // Search through each transport in the current row
+            for (int j = 0; j < parkingLot[i].Count; j++)
+            {
+                Transport transport = parkingLot[i][j];
+                if (transport.RegNumber == regNumber)
+                {
+                    Console.WriteLine($"Found transport in Row {i + 1}, Position {j + 1}");
+                    return transport;
+                }
+            }
+        }
+        return null;
     }
+    public double GetTimespan(Transport transport){
+        var timeNow = DateTime.Now;
+        TimeSpan diff = transport.ExitTime.Value - timeNow;
+        return Math.Floor(diff.TotalSeconds);
+    }
+    }
+
 }

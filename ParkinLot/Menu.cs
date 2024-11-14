@@ -12,13 +12,34 @@ namespace ParkinLot
 
         public static void GuardMenu(Parking parking){
 
-            System.Console.WriteLine("1. View Parking \n 2. Give Ticket");
+            System.Console.WriteLine("1. View Parking \n2. Give Ticket");
             int choice = int.Parse(System.Console.ReadLine());
 
             if (choice == 1){
-                System.Console.WriteLine("PRINTING PARKING");
-                System.Console.WriteLine(parking.parkingLot.Count);
                 parking.ViewParkingSlots();}
+            if (choice == 2){
+
+                System.Console.WriteLine("Type Plate Number: ");
+                string regNumber = System.Console.ReadLine();
+                
+                Transport vehicle = parking.FindTransportByRegNumber(regNumber);
+                
+                if (vehicle == null)
+                {
+                    System.Console.WriteLine($"No transport found with registration number {regNumber}");
+                    return;
+                }
+                if (parking.GetTimespan(vehicle) > 0){
+                    System.Console.WriteLine("VEHICLE STILL HAS TIME FOR PARKING");
+                    return;
+                }
+                System.Console.WriteLine("How much fee to give?");
+                double fee = double.Parse(System.Console.ReadLine());
+
+                vehicle.ticketFee += fee;
+                
+                
+            }
         }
         public static Transport ParkingMenu()
         {
@@ -85,23 +106,6 @@ namespace ParkinLot
         }
 
 
-        public static void CheckExceededTime(DateTime exitTime){
-            DateTime NowTime = DateTime.Now;
-            
-
-            if (NowTime > exitTime)
-            {
-                TimeSpan overtid = NowTime - exitTime;
-                double overtidMinuter = (double)overtid.TotalMinutes;
-                double bot = overtidMinuter * 15;
-
-                Console.WriteLine($"Övertid: {overtidMinuter} minuter. Du får en bot på {bot} kronor.");
-            }
-            else
-            {
-                Console.WriteLine("Hoppas vi ses igen. Ha trevligt resa!");
-            }
-
-        }
+        
     }
 }

@@ -12,9 +12,9 @@ namespace ParkinLot
         public string RegNumber { get; set; }
         public string Color { get; set; }
         public double Size { get; set; }
-
         public DateTime ArrivalTime { get; set; }
         public DateTime? ExitTime { get; set;}
+        public double ticketFee {get; set;}
         public Transport(string regNumber, string color, double size)
         {
             RegNumber = regNumber;
@@ -22,6 +22,7 @@ namespace ParkinLot
             Size = size;
             ArrivalTime = DateTime.Now;
             ExitTime = null;
+            ticketFee = 0;
 
             
         }
