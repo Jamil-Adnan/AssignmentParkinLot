@@ -145,7 +145,7 @@ public class Parking
                 Console.WriteLine($"Parking Space {i + 1} ({(space.IsPremium ? "Premium" : "Standard")}):");
                 foreach (var vehicle in space.Vehicles)
                 {
-                    Console.WriteLine($"   Information:");
+                    Console.WriteLine($"   Information:");                    
                     Console.WriteLine($"    Registration Number: {vehicle.RegNumber}");
                     Console.WriteLine($"    Color: {vehicle.Color}");
                     Console.WriteLine($"    Arrival Time: {vehicle.ArrivalTime}");

@@ -9,7 +9,7 @@
             {
                 Parking parkingHouse = new Parking(25, 3);
                 Vehicle car = new Vehicle("ABC123", "Red", 1);
-                Vehicle bike1 = new Vehicle("XYZ789", "Blue", 1);
+                Vehicle bike1 = new Vehicle("XYZ789", "Blue", 0.5);
                 Vehicle bike2 = new Vehicle("DEF456", "Green", 0.5);
                 // Vehicle bus = new Vehicle("BUS001", "Yellow", 2);
 
