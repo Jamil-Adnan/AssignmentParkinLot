@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParkinLot
 {
-    public class Transport
+    public class Vehicle
     {
         public string RegNumber { get; set; }
         public string Color { get; set; }
@@ -15,7 +15,7 @@ namespace ParkinLot
         public DateTime ArrivalTime { get; set; }
         public DateTime? ExitTime { get; set;}
         public double ticketFee {get; set;}
-        public Transport(string regNumber, string color, double size)
+        public Vehicle(string regNumber, string color, double size)
         {
             RegNumber = regNumber;
             Color = color;
@@ -36,7 +36,7 @@ namespace ParkinLot
         }
     }
 
-    public class Bil : Transport
+    public class Bil : Vehicle
     {
         public bool Elbil { get; set; }
 
@@ -123,7 +123,7 @@ namespace ParkinLot
         
 */
     }
-    public class Motorcykel : Transport
+    public class Motorcykel : Vehicle
     {
         public string Marke { get; set; }
 
@@ -135,7 +135,7 @@ namespace ParkinLot
 
     }
 
-    public class Buss : Transport
+    public class Buss : Vehicle
     {
         public int AntalPassagerare { get; set; }
 
