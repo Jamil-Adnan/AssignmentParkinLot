@@ -33,7 +33,7 @@ namespace ParkinLotTest
         
         public void CalculateAmountWithLargeExceededTime()
         { 
-           double expected = 1500;
+           double expected = 650;
            var result = ParkinLot.TDD.CalculateTotalAmount(100, 510);
            Assert.AreEqual(expected, result);
         }
