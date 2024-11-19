@@ -24,7 +24,10 @@ namespace ParkinLot
             }
             return 0;
         }
-        
+        public static bool PremiumparkingSpot() 
+        {
+            Parking parkingHouse = new Parking(25, 3);
+        }
        
     }
 }
