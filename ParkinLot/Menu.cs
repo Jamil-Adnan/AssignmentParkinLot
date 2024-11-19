@@ -11,7 +11,7 @@ namespace ParkinLot
     {
 
         public static void OwnerMenu(Parking parking){
-            System.Console.WriteLine("1. View Parking \n2. See Income");
+            System.Console.WriteLine("[1] View Parking \n[2] See Income");
             int choice = int.Parse(System.Console.ReadLine());
 
             if (choice == 1){
@@ -22,28 +22,28 @@ namespace ParkinLot
         }
         public static void GuardMenu(Parking parking){
 
-            System.Console.WriteLine("1. View Parking \n2. Give Ticket");
+            System.Console.WriteLine("[1] View Parking \n[2] Give Ticket");
             int choice = int.Parse(System.Console.ReadLine());
 
             if (choice == 1){
                 parking.ViewParkingSlots();}
             if (choice == 2){
 
-                System.Console.WriteLine("Type Plate Number: ");
+                System.Console.Write("Type Registration Number: ");
                 string regNumber = System.Console.ReadLine();
                 
                 Vehicle vehicle = parking.FindVehicleByRegNumber(regNumber);
                 
                 if (vehicle == null)
                 {
-                    System.Console.WriteLine($"No transport found with registration number {regNumber}");
+                    System.Console.WriteLine($"No transport found with the registration number {regNumber}");
                     return;
                 }
                 if (parking.GetTimespan(vehicle) > 0){
-                    System.Console.WriteLine("VEHICLE STILL HAS TIME FOR PARKING");
+                    System.Console.WriteLine("ATTENTION!! VEHICLE STILL HAS TIME LEFT FOR PARKING");
                     return;
                 }
-                System.Console.WriteLine("How much fee to give?");
+                System.Console.Write("How much fee to give?: ");
                 double fee = double.Parse(System.Console.ReadLine());
 
                 vehicle.ticketFee += fee;
@@ -54,7 +54,7 @@ namespace ParkinLot
         public static Vehicle? ParkingMenu(Parking parking)
         {
             string regNumber;
-            Console.WriteLine("Ange registreringsnummer: ");
+            Console.Write("Insert vehicle's Registration Number: ");
             regNumber = Console.ReadLine().Trim();
             
             var vehicleParked = parking.FindVehicleByRegNumber(regNumber);
@@ -64,10 +64,10 @@ namespace ParkinLot
             }
 
 
-            Console.WriteLine("Ange färg på transport:");
+            Console.Write("Insert the Color: ");
             string color = Console.ReadLine();
 
-            Console.WriteLine("Välj din transporttyp genom att trycka på rätt siffra: \n1. Bil \n2. Motorcykel \n3. Buss");
+            Console.WriteLine("Please choose the number correspondiong to your vehicle: \n[1] Car\n[2] Motorcykel\n[3] Bus");
 
             string choice = Console.ReadLine();
 
@@ -75,7 +75,7 @@ namespace ParkinLot
             {
                 case "1":
                     bool elCar = false;
-                    Console.WriteLine("Har du el bil? \n 1. Ja \n 2. Nej");
+                    Console.WriteLine("Is it a Electric Car?\n[1] Yes\n[2] No");
                     int input = int.Parse(Console.ReadLine());
                     if (input == 1) { elCar = true;}
 
@@ -84,7 +84,7 @@ namespace ParkinLot
                     return bil;
 
                 case "2":
-                    System.Console.WriteLine("What brand is it?");
+                    System.Console.Write("What brand is it?: ");
                     string brand = Console.ReadLine();
                     
                     Motorcykel motorcykel = new Motorcykel(regNumber, color, 0.5, brand);
@@ -93,7 +93,7 @@ namespace ParkinLot
                     return motorcykel;
 
                 case "3":
-                    System.Console.WriteLine("How many people u have in buss");
+                    System.Console.Write("How many sits the bus has: ");
                     int passengers = int.Parse(Console.ReadLine()); 
                     Buss buss = new Buss(regNumber, color, 2, passengers);
                     buss.ExitTime = HanteraParkering(buss);
@@ -101,7 +101,7 @@ namespace ParkinLot
 
                 default:
                     // attempts++;
-                    Console.WriteLine($"Ogiltigt val. Försök igen.");
+                    Console.WriteLine($"Wrong input,. Please try again.");
                     return null;
             }
 
@@ -109,15 +109,15 @@ namespace ParkinLot
 
         public static DateTime HanteraParkering(Vehicle vehicle)
         {
-            Console.WriteLine("Hur länge planerar du att stå parkerad? Ange tid i sekunder:");
+            Console.Write("For how long do you wish to park? Please insert the time in seconds: ");
             double parkingTime;
             while (!double.TryParse(Console.ReadLine(), out parkingTime) || parkingTime <= 0)
             {
-                Console.WriteLine("Ogiltig inmatning. Vänligen ange en giltig tid i sekunder:");
+                Console.WriteLine("Wrong input. Please insert a valid time in seconds.");
             }
 
             DateTime exitTime = vehicle.ArrivalTime.AddSeconds(parkingTime);
-            Console.WriteLine($"Din parkering tid utgår kl: {exitTime}. Vi önskar dig en trevlig vistelse!");
+            Console.WriteLine($"Your parkingtime ends : {exitTime}. We wish you a great parking experience with us.");
 
             return exitTime;
         }

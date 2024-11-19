@@ -21,7 +21,7 @@
                 
                 System.Console.WriteLine("\nWELLCOME TO PARKING");
                 while (true) {
-                    System.Console.WriteLine("WHO ARE U MAN? \n 1. USER \n 2. GUARD \n 3. OWNER ");
+                    System.Console.WriteLine("Press [1] to park your vehicle.\nPress [2] for Parking Attendant menu.\nPress [3] for Owner menu.");
                     int choice = int.Parse(System.Console.ReadLine());
 
                     if (choice == 1){ 

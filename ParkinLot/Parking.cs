@@ -71,7 +71,7 @@ public class Parking
 
         if (premiumAvailableSpaces.Count != 0)
         {
-            System.Console.WriteLine($"Do you want premuim place? It costs 50% more to park here.\n1. Yes \n2. No");
+            System.Console.WriteLine($"Do you want premuim place? It costs 50% more.\n[1] Yes \n[2] No");
             var choice = int.Parse(Console.ReadLine().Trim());
             if (choice == 1)
             {
@@ -90,13 +90,13 @@ public class Parking
                     ParkingLot[notPremiumAvailableSpaces[i+1]].ParkVehicle(vehicle);
                 }
             }
-            Console.WriteLine($"Fordon med registreringsnummer {vehicle.RegNumber} har parkerats på plats {notPremiumAvailableSpaces[0] + 1}" +
-                              $"{(spacesNeeded > 1 ? $" och {notPremiumAvailableSpaces[1] + 1}" : "")}. " +
-                              $"{(ParkingLot[notPremiumAvailableSpaces[0]].IsPremium ? "Premium plats." : "Standard plats.")}");
+            Console.WriteLine($"Vehicle with registration number {vehicle.RegNumber}is parked on Parking number {notPremiumAvailableSpaces[0] + 1}" +
+                              $"{(spacesNeeded > 1 ? $" and {notPremiumAvailableSpaces[1] + 1}" : "")}. " +
+                              $"{(ParkingLot[notPremiumAvailableSpaces[0]].IsPremium ? "Premium parking." : "Standard parking.")}");
             return true;
         }
 
-        Console.WriteLine($"Det finns inte tillräckligt med plats för att parkera din fordon.");
+        Console.WriteLine($"Sorry. The parking is full for your type of vehicle.");
         return false;
     }
 
@@ -142,7 +142,7 @@ public class Parking
             var space = ParkingLot[i];
             if (space.Vehicles.Count > 0)
             {
-                Console.WriteLine($"Parking Space {i + 1} ({(space.IsPremium ? "Premium" : "Standard")}):");
+                Console.WriteLine($"Parking number {i + 1} ({(space.IsPremium ? "Premium" : "Standard")}):");
                 foreach (var vehicle in space.Vehicles)
                 {
                     Console.WriteLine($"   Information:");                    
@@ -213,11 +213,11 @@ public class Parking
 
             Income += fee + vehicle.ticketFee;
 
-            Console.WriteLine($"Fordon med registreringsnummer {regNumber} har lämnat parkeringen. \nParkeringsavgift: {fee:C} \nBöter: {vehicle.ticketFee:C}\nTotala summan: {fee+vehicle.ticketFee:C}\n");
+            Console.WriteLine($"Vehicle with registration number {regNumber} has left the parking. \nParking fee: {fee:C} \nFine: {vehicle.ticketFee:C}\nTotal amount: {fee+vehicle.ticketFee:C}\n");
         }
         else
         {
-            Console.WriteLine($"Inget fordon hittades med registreringsnummer {regNumber}");
+            Console.WriteLine($"There is no vehicle found with the registration number {regNumber}");
         }
     }
 
