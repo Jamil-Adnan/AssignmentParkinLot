@@ -24,9 +24,14 @@ namespace ParkinLot
             }
             return 0;
         }
-        public static bool PremiumparkingSpot() 
+        public static bool CheckIfPremiumParkingSpot(int parkingAmount, int premiumSize) 
         {
-            Parking parkingHouse = new Parking(25, 3);
+            if (parkingAmount > 0 && premiumSize > 0) 
+            {
+                Parking parkingHouse = new Parking(parkingAmount, premiumSize);
+                return true;
+            }
+            return false;
         }
        
     }

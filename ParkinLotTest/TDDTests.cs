@@ -30,6 +30,22 @@ namespace ParkinLotTest
             Assert.AreEqual(expected, result);
         }
         [TestMethod]
+
+        public void CheckIfPremiumparkingSpot() 
+        {
+            bool expected = true;
+            var result = ParkinLot.TDD.CheckIfPremiumParkingSpot(25, 3);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+
+        public void CheckIfPremiumParkingSpotWithZeroAndNegativeInput()
+        {
+            bool expected = false;
+            var result = ParkinLot.TDD.CheckIfPremiumParkingSpot(0, 0);
+            Assert.AreEqual(expected, result);
+        }
         /*
         public void CalculateAmountWithLargeExceededTime()
         { 
