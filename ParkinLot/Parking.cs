@@ -1,104 +1,177 @@
-﻿using System;
+﻿using ParkinLot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParkinLot
+public class ParkingSpace
 {
+    public bool IsPremium { get; set; }
+    public List<Vehicle> Vehicles { get; set; }
+    public double OccupiedSpace { get; private set; }
 
-    public class Parking
+    public ParkingSpace(bool isPremium)
     {
-        public int totalParking;
-        public  List<List<Transport>> parkingLot;
-        public Parking(int parkingAmount)
-        {
-            totalParking = parkingAmount;
-            parkingLot = new List<List<Transport>>();
-            createParkingLots();
-        }
+        IsPremium = isPremium;
+        Vehicles = new List<Vehicle>();
+        OccupiedSpace = 0;
+    }
 
-        
-        public List<int> FindEmptyParkingSlots()
+    public bool CanPark(Vehicle vehicle)
+    {
+        return OccupiedSpace + vehicle.Size <= 1.0;
+    }
+
+    public void ParkVehicle(Vehicle vehicle)
+    {
+        Vehicles.Add(vehicle);
+        OccupiedSpace += vehicle.Size;
+    }
+
+    public void RemoveVehicle(Vehicle vehicle)
+    {
+        Vehicles.Remove(vehicle);
+        OccupiedSpace -= vehicle.Size;
+    }
+
+}
+
+public class Parking
+{
+    public int TotalParking { get; private set; }
+    public List<ParkingSpace> ParkingLot { get; private set; }
+    public double Income { get; private set; } = 0;
+    public int PremiumSpaces { get; private set; }
+    public double PricePerSecond = 1.5;
+    public double PremiumMultiplier = 2; 
+
+    public Parking(int parkingAmount, int premiumSpaces)
+    {
+        TotalParking = parkingAmount;
+        PremiumSpaces = premiumSpaces;
+        ParkingLot = new List<ParkingSpace>();
+        CreateParkingLots();
+    }
+
+    private void CreateParkingLots()
+    {
+        for (int i = 0; i < TotalParking; i++)
         {
-        List<int> emptySlots = new List<int>();
-        for (int i = 0; i < parkingLot.Count; i++)
+            bool isPremium = i < PremiumSpaces;
+            ParkingLot.Add(new ParkingSpace(isPremium));
+        }
+    }
+
+    public bool ParkVehicle(Vehicle vehicle)
+    {
+        double spacesNeeded = vehicle.Size;
+        List<int> notPremiumAvailableSpaces = FindAvailableSpaces(vehicle);
+        List<int> premiumAvailableSpaces = FindPremiumAvailableSpaces(vehicle);
+
+        if (premiumAvailableSpaces.Count != 0)
         {
-            if (parkingLot[i].Count == 0)
+            System.Console.WriteLine($"Do you want premuim place? It costs 50% more to park here.\n1. Yes \n2. No");
+            var choice = int.Parse(Console.ReadLine().Trim());
+            if (choice == 1)
             {
-                emptySlots.Add(i);
+                ParkingLot[premiumAvailableSpaces[0]].ParkVehicle(vehicle);
+                return true;
             }
         }
-        return emptySlots;
-        }
         
-        public bool ParkVehicle(Transport vehicle)
+
+        if (notPremiumAvailableSpaces.Count >= spacesNeeded)
         {
-        List<int> emptySlots = FindEmptyParkingSlots();
-        if (emptySlots.Count > 0)
-        {
-            int slotIndex = emptySlots[0]; // Get the first empty slot
-            parkingLot[slotIndex].Add(vehicle);
-            Console.WriteLine($"Fordonet har parkerats på plats {slotIndex + 1}.");
+            for (int i = 0; i < spacesNeeded; i++)
+            {   
+                ParkingLot[notPremiumAvailableSpaces[i]].ParkVehicle(vehicle);
+                if (spacesNeeded == 2.0){
+                    ParkingLot[notPremiumAvailableSpaces[i+1]].ParkVehicle(vehicle);
+                }
+            }
+            Console.WriteLine($"Fordon med registreringsnummer {vehicle.RegNumber} har parkerats på plats {notPremiumAvailableSpaces[0] + 1}" +
+                              $"{(spacesNeeded > 1 ? $" och {notPremiumAvailableSpaces[1] + 1}" : "")}. " +
+                              $"{(ParkingLot[notPremiumAvailableSpaces[0]].IsPremium ? "Premium plats." : "Standard plats.")}");
             return true;
         }
-        Console.WriteLine("Det finns inte tillräckligt med plats för att parkera fordonet.");
+
+        Console.WriteLine($"Det finns inte tillräckligt med plats för att parkera din fordon.");
         return false;
-        }
+    }
 
-        public void createParkingLots(){
-            for (int i = 0; i < totalParking; i++ ){
-                parkingLot.Add(new List<Transport>());
-            };
-        }
-
-        public void ViewParkingSlots()
-        {
-
-            System.Console.WriteLine("THIS");
-            if (parkingLot.Count == 0)
-            {
-                Console.WriteLine("The parking lot is empty.");
-                return;
-            }
-
-            for (int i = 0; i < parkingLot.Count; i++)
-            {
-                
-                if (parkingLot[i].Count !=  0)
-                {
-                    Console.WriteLine($"Parking Row {i + 1}:");
-                    foreach (var transport in parkingLot[i])
-                    {
-                        Console.WriteLine($"  Transport Information:");
-                        Console.WriteLine($"    Registration Number: {transport.RegNumber}");
-                        Console.WriteLine($"    Color: {transport.Color}");
-                        Console.WriteLine($"    Size: {transport.Size}");
-                        Console.WriteLine($"    Arrival Time: {transport.ArrivalTime}");
-                        
-                        if (transport.ExitTime.HasValue)
-                        {
-                            Console.WriteLine($"    Exit Time: { GetTimespan(transport)} left");
-                        }
-                        else
-                        {
-                            Console.WriteLine("    Exit Time: Not exited yet");
-                        }
-
-                        if (transport.ticketFee > 0){
-                            System.Console.WriteLine($"    Fee: {transport.ticketFee}");
-                        }
-                        
-                    }
-                }
-                
-                Console.WriteLine(); // Empty line between rows
-            }
-        }
-        
-    public Transport FindTransportByRegNumber(string regNumber)
+    private List<int> FindAvailableSpaces(Vehicle vehicle)
     {
-        // Validate input
+        List<int> availableSpaces = new List<int>();
+
+        for (int i = 0; i < ParkingLot.Count; i++)
+        {
+            if (ParkingLot[i].CanPark(vehicle) && !ParkingLot[i].IsPremium)
+            {
+                availableSpaces.Add(i);
+            }
+        }
+
+        return availableSpaces;
+    }
+    private List<int> FindPremiumAvailableSpaces(Vehicle vehicle)
+    {
+        List<int> availableSpaces = new List<int>();
+
+        for (int i = 0; i < ParkingLot.Count; i++)
+        {
+            if (vehicle.Size == 1.0 && ParkingLot[i].CanPark(vehicle) && ParkingLot[i].IsPremium)
+            {
+                availableSpaces.Add(i);
+            }
+        }
+
+        return availableSpaces;
+    }
+
+    public void ViewParkingSlots()
+    {
+        if (ParkingLot.All(space => space.Vehicles.Count == 0))
+        {
+            Console.WriteLine("The parking lot is empty.");
+            return;
+        }
+
+        for (int i = 0; i < ParkingLot.Count; i++)
+        {
+            var space = ParkingLot[i];
+            if (space.Vehicles.Count > 0)
+            {
+                Console.WriteLine($"Parking Space {i + 1} ({(space.IsPremium ? "Premium" : "Standard")}):");
+                foreach (var vehicle in space.Vehicles)
+                {
+                    Console.WriteLine($"   Information:");                    
+                    Console.WriteLine($"    Registration Number: {vehicle.RegNumber}");
+                    Console.WriteLine($"    Color: {vehicle.Color}");
+                    Console.WriteLine($"    Arrival Time: {vehicle.ArrivalTime}");
+                    
+                    if (vehicle.ExitTime.HasValue)
+                    {
+                        Console.WriteLine($"    Time Left: {GetTimespan(vehicle)} seconds");
+                    }
+                    else
+                    {
+                        Console.WriteLine("    Exit Time: Not exited yet");
+                    }
+
+                    if (vehicle.ticketFee > 0)
+                    {
+                        Console.WriteLine($"    Fee: {vehicle.ticketFee}");
+                    }
+                    
+                    Console.WriteLine();
+                }
+            }
+        }
+    }
+
+    public Vehicle FindVehicleByRegNumber(string regNumber)
+    {
         if (string.IsNullOrWhiteSpace(regNumber))
         {
             throw new ArgumentException("Registration number cannot be null or empty.", nameof(regNumber));
@@ -106,27 +179,52 @@ namespace ParkinLot
 
         regNumber = regNumber.Trim();
 
-        // Search through each row in the parking lot
-        for (int i = 0; i < parkingLot.Count; i++)
+        foreach (var space in ParkingLot)
         {
-            // Search through each transport in the current row
-            for (int j = 0; j < parkingLot[i].Count; j++)
+            var vehicle = space.Vehicles.FirstOrDefault(v => v.RegNumber == regNumber);
+            if (vehicle != null)
             {
-                Transport transport = parkingLot[i][j];
-                if (transport.RegNumber == regNumber)
-                {
-                    Console.WriteLine($"Found transport in Row {i + 1}, Position {j + 1}");
-                    return transport;
-                }
+                return vehicle;
             }
         }
+
         return null;
     }
-    public double GetTimespan(Transport transport){
-        var timeNow = DateTime.Now;
-        TimeSpan diff = transport.ExitTime.Value - timeNow;
-        return Math.Floor(diff.TotalSeconds);
-    }
+
+    public void ExitVehicle(string regNumber)
+    {
+        var vehicle = FindVehicleByRegNumber(regNumber);
+        if (vehicle != null)
+        {
+            var spaces = ParkingLot.Where(s => s.Vehicles.Contains(vehicle)).ToList();
+            foreach (var space in spaces)
+            {
+                space.RemoveVehicle(vehicle);
+            }
+
+
+            
+            double fee = PricePerSecond * Math.Abs(GetTimespan(vehicle));
+            if (spaces[0].IsPremium)
+            {
+                fee *= PremiumMultiplier;
+            }
+
+
+            Income += fee + vehicle.ticketFee;
+
+            Console.WriteLine($"Fordon med registreringsnummer {regNumber} har lämnat parkeringen. \nParkeringsavgift: {fee:C} \nBöter: {vehicle.ticketFee:C}\nTotala summan: {fee+vehicle.ticketFee:C}\n");
+        }
+        else
+        {
+            Console.WriteLine($"Inget fordon hittades med registreringsnummer {regNumber}");
+        }
     }
 
+    public double GetTimespan(Vehicle vehicle)
+    {
+        var timeNow = DateTime.Now;
+        TimeSpan diff = vehicle.ExitTime.Value - timeNow;
+        return Math.Floor(diff.TotalSeconds);
+    }
 }

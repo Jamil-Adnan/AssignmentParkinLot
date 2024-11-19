@@ -10,6 +10,16 @@ namespace ParkinLot
     public static class Menu
     {
 
+        public static void OwnerMenu(Parking parking){
+            System.Console.WriteLine("1. View Parking \n2. See Income");
+            int choice = int.Parse(System.Console.ReadLine());
+
+            if (choice == 1){
+                parking.ViewParkingSlots();} 
+            if (choice ==2){
+                System.Console.WriteLine($"{parking.Income:C}");
+            }
+        }
         public static void GuardMenu(Parking parking){
 
             System.Console.WriteLine("1. View Parking \n2. Give Ticket");
@@ -22,7 +32,7 @@ namespace ParkinLot
                 System.Console.WriteLine("Type Plate Number: ");
                 string regNumber = System.Console.ReadLine();
                 
-                Transport vehicle = parking.FindTransportByRegNumber(regNumber);
+                Vehicle vehicle = parking.FindVehicleByRegNumber(regNumber);
                 
                 if (vehicle == null)
                 {
@@ -41,11 +51,18 @@ namespace ParkinLot
                 
             }
         }
-        public static Transport ParkingMenu()
+        public static Vehicle? ParkingMenu(Parking parking)
         {
             string regNumber;
             Console.WriteLine("Ange registreringsnummer: ");
             regNumber = Console.ReadLine().Trim();
+            
+            var vehicleParked = parking.FindVehicleByRegNumber(regNumber);
+            if (vehicleParked != null){
+                parking.ExitVehicle(regNumber);
+                return null;
+            }
+
 
             Console.WriteLine("Ange färg på transport:");
             string color = Console.ReadLine();
@@ -90,7 +107,7 @@ namespace ParkinLot
 
         }
 
-        public static DateTime HanteraParkering(Transport transport)
+        public static DateTime HanteraParkering(Vehicle vehicle)
         {
             Console.WriteLine("Hur länge planerar du att stå parkerad? Ange tid i sekunder:");
             double parkingTime;
@@ -99,7 +116,7 @@ namespace ParkinLot
                 Console.WriteLine("Ogiltig inmatning. Vänligen ange en giltig tid i sekunder:");
             }
 
-            DateTime exitTime = transport.ArrivalTime.AddSeconds(parkingTime);
+            DateTime exitTime = vehicle.ArrivalTime.AddSeconds(parkingTime);
             Console.WriteLine($"Din parkering tid utgår kl: {exitTime}. Vi önskar dig en trevlig vistelse!");
 
             return exitTime;
