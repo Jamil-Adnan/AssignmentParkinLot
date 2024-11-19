@@ -36,11 +36,11 @@ namespace ParkinLot
         }
     }
 
-    public class Bil : Vehicle
+    public class Car : Vehicle
     {
         public bool Elbil { get; set; }
 
-        public Bil(string regNumber, string color, double size, bool elbil)
+        public Car(string regNumber, string color, double size, bool elbil)
             : base(regNumber, color, size)
         {
             Elbil = elbil;
@@ -135,11 +135,11 @@ namespace ParkinLot
 
     }
 
-    public class Buss : Vehicle
+    public class Bus : Vehicle
     {
         public int AntalPassagerare { get; set; }
 
-        public Buss(string regNumber, string color, double size, int antalPassagerare)
+        public Bus(string regNumber, string color, double size, int antalPassagerare)
             : base(regNumber, color, size)
         {
             AntalPassagerare = antalPassagerare;

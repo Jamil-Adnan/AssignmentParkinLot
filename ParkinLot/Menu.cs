@@ -35,26 +35,25 @@ namespace ParkinLot
                 Vehicle vehicle = parking.FindVehicleByRegNumber(regNumber);
                 
                 if (vehicle == null)
-                {
-                    System.Console.WriteLine($"No transport found with the registration number {regNumber}");
+                { 
+                    System.Console.WriteLine($"No vehicle is found with registration number {regNumber}");
                     return;
                 }
                 if (parking.GetTimespan(vehicle) > 0){
                     System.Console.WriteLine("ATTENTION!! VEHICLE STILL HAS TIME LEFT FOR PARKING");
                     return;
                 }
-                System.Console.Write("How much fee to give?: ");
+                System.Console.Write("How much penalty to charge?: ");
                 double fee = double.Parse(System.Console.ReadLine());
 
-                vehicle.ticketFee += fee;
-                
+                vehicle.ticketFee += fee;             
                 
             }
         }
         public static Vehicle? ParkingMenu(Parking parking)
         {
             string regNumber;
-            Console.Write("Insert vehicle's Registration Number: ");
+            Console.Write("Insert Registration Number: ");
             regNumber = Console.ReadLine().Trim();
             
             var vehicleParked = parking.FindVehicleByRegNumber(regNumber);
@@ -75,11 +74,11 @@ namespace ParkinLot
             {
                 case "1":
                     bool elCar = false;
-                    Console.WriteLine("Is it a Electric Car?\n[1] Yes\n[2] No");
+                    Console.WriteLine("Is it an Electric Car?\n[1] Yes\n[2] No");
                     int input = int.Parse(Console.ReadLine());
                     if (input == 1) { elCar = true;}
 
-                    Bil bil = new Bil(regNumber, color, 1, elCar); 
+                    Car bil = new Car(regNumber, color, 1, elCar); 
                     bil.ExitTime = HanteraParkering(bil);
                     return bil;
 
@@ -95,7 +94,7 @@ namespace ParkinLot
                 case "3":
                     System.Console.Write("How many sits the bus has: ");
                     int passengers = int.Parse(Console.ReadLine()); 
-                    Buss buss = new Buss(regNumber, color, 2, passengers);
+                    Bus buss = new Bus(regNumber, color, 2, passengers);
                     buss.ExitTime = HanteraParkering(buss);
                     return buss;
 

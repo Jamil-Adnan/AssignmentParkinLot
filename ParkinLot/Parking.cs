@@ -76,6 +76,9 @@ public class Parking
             if (choice == 1)
             {
                 ParkingLot[premiumAvailableSpaces[0]].ParkVehicle(vehicle);
+                Console.WriteLine($"Vehicle with registration number {vehicle.RegNumber} please park on Parking number {premiumAvailableSpaces[0] + 1}" +
+                              $"{(spacesNeeded > 1 ? $" and {premiumAvailableSpaces[1] + 1}" : "")}. " +
+                              $"{(ParkingLot[premiumAvailableSpaces[0]].IsPremium ? "Premium parking." : "Standard parking.")}");
                 return true;
             }
         }
@@ -90,7 +93,7 @@ public class Parking
                     ParkingLot[notPremiumAvailableSpaces[i+1]].ParkVehicle(vehicle);
                 }
             }
-            Console.WriteLine($"Vehicle with registration number {vehicle.RegNumber}is parked on Parking number {notPremiumAvailableSpaces[0] + 1}" +
+            Console.WriteLine($"Vehicle with registration number {vehicle.RegNumber} please park on Parking number {notPremiumAvailableSpaces[0] + 1}" +
                               $"{(spacesNeeded > 1 ? $" and {notPremiumAvailableSpaces[1] + 1}" : "")}. " +
                               $"{(ParkingLot[notPremiumAvailableSpaces[0]].IsPremium ? "Premium parking." : "Standard parking.")}");
             return true;
@@ -145,14 +148,13 @@ public class Parking
                 Console.WriteLine($"Parking number {i + 1} ({(space.IsPremium ? "Premium" : "Standard")}):");
                 foreach (var vehicle in space.Vehicles)
                 {
-                    Console.WriteLine($"   Information:");                    
-                    Console.WriteLine($"    Registration Number: {vehicle.RegNumber}");
-                    Console.WriteLine($"    Color: {vehicle.Color}");
-                    Console.WriteLine($"    Arrival Time: {vehicle.ArrivalTime}");
+                    Console.WriteLine($"   Information: {vehicle.GetType().Name} with Registration Number {vehicle.RegNumber}");
+                    Console.WriteLine($"   Color: {vehicle.Color}");
+                    Console.WriteLine($"   Arrival Time: {vehicle.ArrivalTime}");
                     
                     if (vehicle.ExitTime.HasValue)
                     {
-                        Console.WriteLine($"    Time Left: {GetTimespan(vehicle)} seconds");
+                        Console.WriteLine($"   Time Left: {GetTimespan(vehicle)} seconds");
                     }
                     else
                     {
