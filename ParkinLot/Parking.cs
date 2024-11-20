@@ -169,7 +169,7 @@ public class Parking
                     
                     if (vehicle.ExitTime.HasValue)
                     {
-                        Console.WriteLine($"   Time Left: {GetTimespan(vehicle)} seconds");
+                        Console.WriteLine($"   Time Left/Exceeded: {TimeLeft(vehicle)}");
                     }
                     else
                     {
@@ -219,9 +219,8 @@ public class Parking
                 space.RemoveVehicle(vehicle);
             }
 
-
-            
-            double fee = PricePerSecond * Math.Abs(GetTimespan(vehicle));
+            var timespan = GetTimespan(vehicle);
+            double fee = PricePerSecond * Math.Abs(timespan);
             if (vehicle.Size == 2.0){fee *= 2.0;}
             if (spaces[0].IsPremium)
             {
@@ -242,7 +241,13 @@ public class Parking
     public double GetTimespan(Vehicle vehicle)
     {
         var timeNow = DateTime.Now;
-        TimeSpan diff = vehicle.ExitTime.Value - timeNow;
+        TimeSpan diff = timeNow - vehicle.ArrivalTime;
         return Math.Floor(diff.TotalSeconds);
+    }
+
+    public double TimeLeft(Vehicle vehicle){
+        TimeSpan diff = vehicle.ExitTime.Value - DateTime.Now;
+        return Math.Floor(diff.TotalSeconds);
+
     }
 }

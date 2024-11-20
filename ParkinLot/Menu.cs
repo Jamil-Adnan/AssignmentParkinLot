@@ -39,11 +39,11 @@ namespace ParkinLot{
                     System.Console.WriteLine($"No vehicle is found with registration number {regNumber}");
                     return;
                 }
-                if (parking.GetTimespan(vehicle) > 0){
+                if (parking.TimeLeft(vehicle) > 0){
                     System.Console.WriteLine("ATTENTION!! VEHICLE STILL HAS TIME LEFT FOR PARKING");
                     return;
                 }
-                System.Console.Write($"How much penalty to charge? Parking time exceeded by {Math.Abs(parking.GetTimespan(vehicle))} seconds : ");
+                System.Console.Write($"How much penalty to charge? Parking time exceeded by {Math.Abs(parking.TimeLeft(vehicle))} seconds : ");
                 double fee = double.Parse(System.Console.ReadLine());
 
                 vehicle.ticketFee += fee; 
