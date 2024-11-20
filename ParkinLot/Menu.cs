@@ -13,11 +13,13 @@ namespace ParkinLot
         public static void OwnerMenu(Parking parking){
             System.Console.WriteLine("[1] View Parking \n[2] See Income");
             int choice = int.Parse(System.Console.ReadLine());
+            Console.WriteLine();
 
             if (choice == 1){
                 parking.ViewParkingSlots();} 
             if (choice ==2){
-                System.Console.WriteLine($"{parking.Income:C}");
+                System.Console.WriteLine($"Today your parking had revenues of: {parking.Income:C} for now....");
+                Console.WriteLine();
             }
         }
         public static void GuardMenu(Parking parking){
@@ -43,7 +45,7 @@ namespace ParkinLot
                     System.Console.WriteLine("ATTENTION!! VEHICLE STILL HAS TIME LEFT FOR PARKING");
                     return;
                 }
-                System.Console.Write("How much penalty to charge?: ");
+                System.Console.Write($"How much penalty to charge? Exceded time :{parking.GetTimespan(vehicle)} seconds.");
                 double fee = double.Parse(System.Console.ReadLine());
 
                 vehicle.ticketFee += fee;             
@@ -116,7 +118,8 @@ namespace ParkinLot
             }
 
             DateTime exitTime = vehicle.ArrivalTime.AddSeconds(parkingTime);
-            Console.WriteLine($"Your parkingtime ends : {exitTime}. We wish you a great parking experience with us.");
+            Console.WriteLine($"Your parkingtime ends : {exitTime}.We wish you a great parking experience with us.");
+            Console.WriteLine();
 
             return exitTime;
         }

@@ -27,7 +27,7 @@
                 Console.WriteLine();
                 
                 while (true) {
-                    System.Console.WriteLine("Press [1] to park your vehicle.\nPress [2] for Parking Attendant menu.\nPress [3] for Owner menu.\nPress [4] to exit the program");
+                    System.Console.WriteLine("Press [1] to check IN/OUT your vehicle.\nPress [2] for Parking Attendant menu.\nPress [3] for Owner menu.\nPress [4] to exit the program");
                     int choice = int.Parse(System.Console.ReadLine());
 
                     if (choice == 1){ 
