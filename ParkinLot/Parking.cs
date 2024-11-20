@@ -222,6 +222,7 @@ public class Parking
 
             
             double fee = PricePerSecond * Math.Abs(GetTimespan(vehicle));
+            if (vehicle.Size == 2.0){fee *= 2.0;}
             if (spaces[0].IsPremium)
             {
                 fee *= PremiumMultiplier;
