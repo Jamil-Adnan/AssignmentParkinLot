@@ -116,7 +116,6 @@ namespace ParkinLot
             }
 
             DateTime exitTime = vehicle.ArrivalTime.AddSeconds(parkingTime);
-            Console.WriteLine($"Your parkingtime ends : {exitTime}. We wish you a great parking experience with us.");
 
             return exitTime;
         }

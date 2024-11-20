@@ -40,6 +40,7 @@
                         Vehicle vehicle = Menu.ParkingMenu(parkingHouse);
                         if (vehicle != null){
                         parkingHouse.ParkVehicle(vehicle);
+                        Console.WriteLine($"Your parkingtime ends : {vehicle.ExitTime}. We wish you a great parking experience with us.");
                         }
                         }
                     if (choice == 2){Menu.GuardMenu(parkingHouse);}

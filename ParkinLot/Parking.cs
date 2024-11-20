@@ -20,6 +20,10 @@ public class ParkingSpace
 
     public bool CanPark(Vehicle vehicle)
     {
+        if (IsPremium)
+        {
+            return vehicle.Size == 1.0 && OccupiedSpace == 0;
+        }
         return OccupiedSpace + vehicle.Size <= 1.0;
     }
 
@@ -65,72 +69,83 @@ public class Parking
 
     public bool ParkVehicle(Vehicle vehicle)
     {
-        double spacesNeeded = vehicle.Size;
-        List<int> notPremiumAvailableSpaces = FindAvailableSpaces(vehicle);
-        List<int> premiumAvailableSpaces = FindPremiumAvailableSpaces(vehicle);
+        var (standardSpaces, premiumSpaces) = FindAvailableSpaces(vehicle);
 
-        if (premiumAvailableSpaces.Count != 0)
+        if (vehicle is Car && premiumSpaces.Count > 0)
         {
-            System.Console.WriteLine($"Do you want premuim place? It costs 50% more.\n[1] Yes \n[2] No");
-            var choice = int.Parse(Console.ReadLine().Trim());
-            if (choice == 1)
+            Console.WriteLine("Do you want a premium parking space? It costs 50% more.");
+            Console.WriteLine("[1] Yes");
+            Console.WriteLine("[2] No");
+            if (int.TryParse(Console.ReadLine(), out int choice) && choice == 1)
             {
-                ParkingLot[premiumAvailableSpaces[0]].ParkVehicle(vehicle);
-                Console.WriteLine($"Vehicle with registration number {vehicle.RegNumber} please park on Parking number {premiumAvailableSpaces[0] + 1}" +
-                              $"{(spacesNeeded > 1 ? $" and {premiumAvailableSpaces[1] + 1}" : "")}. " +
-                              $"{(ParkingLot[premiumAvailableSpaces[0]].IsPremium ? "Premium parking." : "Standard parking.")}");
+                ParkInSpace(vehicle, premiumSpaces[0], true);
+                
                 return true;
             }
         }
-        
 
-        if (notPremiumAvailableSpaces.Count >= spacesNeeded)
+        if (standardSpaces.Count >= vehicle.Size)
         {
-            for (int i = 0; i < spacesNeeded; i++)
-            {   
-                ParkingLot[notPremiumAvailableSpaces[i]].ParkVehicle(vehicle);
-                if (spacesNeeded == 2.0){
-                    ParkingLot[notPremiumAvailableSpaces[i+1]].ParkVehicle(vehicle);
-                }
+            double remainingSize = vehicle.Size;
+            foreach (int spaceIndex in standardSpaces)
+            {
+                double availableSpace = 1.0 - ParkingLot[spaceIndex].OccupiedSpace;
+                double sizeTopark = Math.Min(remainingSize, availableSpace);
+            
+                ParkInSpace(vehicle, spaceIndex, false);
+                remainingSize -= sizeTopark;
+                if (remainingSize <= 0) break;
             }
-            Console.WriteLine($"Vehicle with registration number {vehicle.RegNumber} please park on Parking number {notPremiumAvailableSpaces[0] + 1}" +
-                              $"{(spacesNeeded > 1 ? $" and {notPremiumAvailableSpaces[1] + 1}" : "")}. " +
-                              $"{(ParkingLot[notPremiumAvailableSpaces[0]].IsPremium ? "Premium parking." : "Standard parking.")}");
             return true;
         }
 
-        Console.WriteLine($"Sorry. The parking is full for your type of vehicle.");
+        Console.WriteLine("Sorry, the parking is full for your type of vehicle.");
         return false;
     }
 
-    private List<int> FindAvailableSpaces(Vehicle vehicle)
+    private void ParkInSpace(Vehicle vehicle, int spaceIndex, bool isPremium)
     {
-        List<int> availableSpaces = new List<int>();
+        ParkingLot[spaceIndex].ParkVehicle(vehicle);
+        string parkingType = isPremium ? "Premium" : "Standard";
+        Console.WriteLine($"Your vehicle with registration number {vehicle.RegNumber} is parked in {parkingType} space {spaceIndex + 1}.");
+    }
+
+    private (List<int> standardSpaces, List<int> premiumSpaces) FindAvailableSpaces(Vehicle vehicle)
+    {
+        List<int> standardSpaces = new List<int>();
+        List<int> premiumSpaces = new List<int>();
 
         for (int i = 0; i < ParkingLot.Count; i++)
         {
-            if (ParkingLot[i].CanPark(vehicle) && !ParkingLot[i].IsPremium)
+            if (ParkingLot[i].CanPark(vehicle))
             {
-                availableSpaces.Add(i);
+                if (ParkingLot[i].IsPremium)
+                {
+                    premiumSpaces.Add(i);
+                }
+                else
+                {
+                    standardSpaces.Add(i);
+                }
+            }
+            // For buses, we need to ensure two adjacent spaces`
+            if (vehicle.Size == 2.0)
+            {
+                if (i < ParkingLot.Count - 1 && 
+                        !ParkingLot[i].IsPremium && !ParkingLot[i + 1].IsPremium &&
+                        ParkingLot[i].OccupiedSpace == 0 && ParkingLot[i + 1].OccupiedSpace == 0)
+                    {
+                        standardSpaces.Add(i);
+                        standardSpaces.Add(i+1);
+                        i++; // Skip the next space as it's part of the bus parking
+                    }
             }
         }
 
-        return availableSpaces;
-    }
-    private List<int> FindPremiumAvailableSpaces(Vehicle vehicle)
-    {
-        List<int> availableSpaces = new List<int>();
 
-        for (int i = 0; i < ParkingLot.Count; i++)
-        {
-            if (vehicle.Size == 1.0 && ParkingLot[i].CanPark(vehicle) && ParkingLot[i].IsPremium)
-            {
-                availableSpaces.Add(i);
-            }
-        }
-
-        return availableSpaces;
+        return (standardSpaces, premiumSpaces);
     }
+
 
     public void ViewParkingSlots()
     {
