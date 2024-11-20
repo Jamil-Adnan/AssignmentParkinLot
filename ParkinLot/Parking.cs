@@ -231,7 +231,7 @@ public class Parking
 
             Income += fee + vehicle.ticketFee;
 
-            Console.WriteLine($"Vehicle with registration number {regNumber} has left the parking. \nParking fee: {fee:C} \nFine: {vehicle.ticketFee:C}\nTotal amount: {fee+vehicle.ticketFee:C}\n");
+            Console.WriteLine($"Vehicle with registration number {regNumber} is checking out. \nParking fee: {fee:C} \nFine: {vehicle.ticketFee:C}\nTotal amount to pay is : {fee+vehicle.ticketFee:C}\n");
         }
         else
         {

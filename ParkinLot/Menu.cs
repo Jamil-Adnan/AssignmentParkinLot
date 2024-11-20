@@ -5,11 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParkinLot
-{
+namespace ParkinLot{
     public static class Menu
     {
-
         public static void OwnerMenu(Parking parking){
             System.Console.WriteLine("[1] View Parking \n[2] See Income");
             int choice = int.Parse(System.Console.ReadLine());
@@ -45,11 +43,10 @@ namespace ParkinLot
                     System.Console.WriteLine("ATTENTION!! VEHICLE STILL HAS TIME LEFT FOR PARKING");
                     return;
                 }
-                System.Console.Write($"How much penalty to charge? Exceded time :{parking.GetTimespan(vehicle)} seconds.");
+                System.Console.Write($"How much penalty to charge? Parking time exceeded by {Math.Abs(parking.GetTimespan(vehicle))} seconds : ");
                 double fee = double.Parse(System.Console.ReadLine());
 
-                vehicle.ticketFee += fee;             
-                
+                vehicle.ticketFee += fee; 
             }
         }
         public static Vehicle? ParkingMenu(Parking parking)
@@ -63,7 +60,6 @@ namespace ParkinLot
                 parking.ExitVehicle(regNumber);
                 return null;
             }
-
 
             Console.Write("Insert the Color: ");
             string color = Console.ReadLine();
